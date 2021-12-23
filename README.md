@@ -12,23 +12,18 @@ Goals:
 Feel free to join us as we experiment with ways to solve this problem, using:
 
 - FlutterFire packages: [firebase_messaging], [firebase_auth], [cloud_firestore]
-- [Firebase Cloud Functions] for the App Server
+- [Firebase Cloud Functions] for the notifications App Server
 - [Riverpod] for state management
 - [go_router] for navigation
 
-[Project Notes]
+## References
 
-- [x] Create a Flutter project
-- [ ] Create a Firebase project
-- [x] Import firebase_messaging
-- [ ] Initialize Firebase
-- [ ] Go over [firebase_messaging] docs & create feature request issues to implement required functionality
-- [ ] Create a firebase function that sends notifications
+[Project Notes]
 
 [Adventures In \[Dart, Flutter, Firebase\]]: https://www.meetup.com/Adventures-In-Dart-Flutter-Firebase/
 [Firebase Cloud Functions]: https://firebase.google.com/docs/functions
 [Riverpod]: https://riverpod.dev/
-[Project Notes]: https://adventures-in.notion.site/Notification-Fun-20be3226d6824c3798bab0ab48974c6c
+[Project Notes]: https://adventures-in.notion.site/Meeting-Scheduler-262ad85a6cb04c5080e7a624151a800a
 [firebase_messaging]: https://firebase.flutter.dev/docs/messaging/overview/
 [firebase_auth]: https://firebase.flutter.dev/docs/auth/overview
 [cloud_firestore]: https://firebase.flutter.dev/docs/firestore/overview
