@@ -9,6 +9,7 @@
 .history
 .svn/
 
+
 # IntelliJ related
 *.iml
 *.ipr
@@ -47,3 +48,7 @@ app.*.map.json
 
 # Firebase config file
 lib/firebase_options.dart
+
+
+# Nnode-modules
+functions/node_modules/
