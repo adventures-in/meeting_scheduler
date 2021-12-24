@@ -1,14 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meeting_scheduler/home/home_screen.dart';
-import 'package:meeting_scheduler/meeting_details/screen_meeting_details.dart';
-import 'package:meeting_scheduler/organization_details/screen_org_details.dart';
+import 'package:meeting_scheduler/auth/auth_gate.dart';
+import 'package:meeting_scheduler/meeting/screen_meeting_details.dart';
+import 'package:meeting_scheduler/not-found/not_found_screen.dart';
+import 'package:meeting_scheduler/organization/screen_org_details.dart';
 import 'package:meeting_scheduler/profile/screen_profile_details.dart';
-import 'package:meeting_scheduler/project_details/screen_project_details.dart';
-import 'package:meeting_scheduler/team_details/screen_team_details.dart';
+import 'package:meeting_scheduler/project/screen_project_details.dart';
+import 'package:meeting_scheduler/team/screen_team_details.dart';
 
 import 'firebase_options.dart';
 
@@ -26,14 +25,17 @@ class MyApp extends StatelessWidget {
       future: Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         } else {
-          return MaterialApp(
+          return MaterialApp.router(
+            routeInformationParser: _router.routeInformationParser,
+            routerDelegate: _router.routerDelegate,
             title: 'Meeting Scheduler',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: const AuthGate(),
           );
         }
       },
@@ -42,16 +44,23 @@ class MyApp extends StatelessWidget {
 
   final GoRouter _router = GoRouter(
     urlPathStrategy: UrlPathStrategy.path,
-		
     routes: [
       GoRoute(
         path: '/',
-        name: 'home',
+        name: 'auth',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ScreenHome(),
+          child: const AuthGate(),
         ),
       ),
+      // GoRoute(
+      //   path: '/',
+      //   name: 'home',
+      //   pageBuilder: (context, state) => MaterialPage(
+      //     key: state.pageKey,
+      //     child: const ScreenHome(),
+      //   ),
+      // ),
       GoRoute(
         path: '/meeting',
         name: 'meeting',
@@ -93,36 +102,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
     ],
+    errorPageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: NotFoundScreen(exception: state.error!),
+    ),
   );
 }
-
-class AuthGate extends StatelessWidget {
-  const AuthGate({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        return StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            // User is not signed in
-            if (!snapshot.hasData) {
-              return const SignInScreen(providerConfigs: [
-                EmailProviderConfiguration(),
-                GoogleProviderConfiguration(
-                  clientId: '220727339122-b3fflgie9rq6b6atu8sfml3274snrs31.apps.googleusercontent.com',
-                ),
-              ]);
-            }
-
-            // Render your application if authenticated
-            return const ScreenHome();
-          },
-        );
-      },
-    );
-  }
-}
-
