@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ScreenOrganizationDetails extends StatelessWidget {
-  const ScreenOrganizationDetails({Key? key}) : super(key: key);
+class OrganizationDetailsScreen extends StatelessWidget {
+  const OrganizationDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

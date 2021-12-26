@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ScreenTeam extends StatelessWidget {
-  const ScreenTeam({Key? key}) : super(key: key);
+class TeamDetailsScreen extends StatelessWidget {
+  const TeamDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

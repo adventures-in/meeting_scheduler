@@ -2,12 +2,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:meeting_scheduler/auth/auth_gate.dart';
-import 'package:meeting_scheduler/meeting/screen_meeting_details.dart';
+import 'package:meeting_scheduler/meeting/meeting_details_screen.dart';
 import 'package:meeting_scheduler/not-found/not_found_screen.dart';
-import 'package:meeting_scheduler/organization/screen_org_details.dart';
-import 'package:meeting_scheduler/profile/screen_profile_details.dart';
-import 'package:meeting_scheduler/project/screen_project_details.dart';
-import 'package:meeting_scheduler/team/screen_team_details.dart';
+import 'package:meeting_scheduler/organization/organization_details_screen.dart';
+import 'package:meeting_scheduler/profile/profile_details_screen.dart';
+import 'package:meeting_scheduler/project/project_details_screen.dart';
+import 'package:meeting_scheduler/team/team_details_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           );
         } else {
           return MaterialApp.router(
+						debugShowCheckedModeBanner: false,
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,
             title: 'Meeting Scheduler',
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
         name: 'meeting',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ScreenMeetingDetails(),
+          child: const MeetingDetailsScreen(),
         ),
       ),
       GoRoute(
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
         name: 'organization',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ScreenOrganizationDetails(),
+          child: const OrganizationDetailsScreen(),
         ),
       ),
       GoRoute(
@@ -82,7 +83,7 @@ class MyApp extends StatelessWidget {
         name: 'profile',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ScreenProfile(),
+          child: const ProfileScreen(),
         ),
       ),
       GoRoute(
@@ -90,7 +91,7 @@ class MyApp extends StatelessWidget {
         name: 'project',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ScreenProjectDetails(),
+          child: const ProjectDetailsScreen(),
         ),
       ),
       GoRoute(
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
         name: 'team',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ScreenTeam(),
+          child: const TeamDetailsScreen(),
         ),
       ),
     ],

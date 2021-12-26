@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ScreenMeetingDetails extends StatelessWidget {
-  const ScreenMeetingDetails({Key? key}) : super(key: key);
+class MeetingDetailsScreen extends StatelessWidget {
+  const MeetingDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
