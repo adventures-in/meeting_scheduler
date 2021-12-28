@@ -1,78 +1,111 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meeting_scheduler/auth/auth_gate.dart';
+import 'package:meeting_scheduler/meeting/meeting_details_screen.dart';
+import 'package:meeting_scheduler/not-found/not_found_screen.dart';
+import 'package:meeting_scheduler/organization/organization_details_screen.dart';
+import 'package:meeting_scheduler/profile/profile_details_screen.dart';
+import 'package:meeting_scheduler/project/project_details_screen.dart';
+import 'package:meeting_scheduler/team/team_details_screen.dart';
 
 import 'firebase_options.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(
-            options: DefaultFirebaseOptions.currentPlatform),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } else {
-            return MaterialApp(
-              title: 'Meeting Scheduler',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
-              home: const AuthGate(),
-            );
-          }
-        });
-  }
-}
-
-class AuthGate extends StatelessWidget {
-  const AuthGate({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      future: Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
       builder: (context, snapshot) {
-        return StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            // User is not signed in
-            if (!snapshot.hasData) {
-              return const SignInScreen(providerConfigs: [
-                EmailProviderConfiguration(),
-                GoogleProviderConfiguration(
-                  clientId:
-                      '220727339122-b3fflgie9rq6b6atu8sfml3274snrs31.apps.googleusercontent.com',
-                ),
-              ]);
-            }
-
-            // Render your application if authenticated
-            return const HomePage();
-          },
-        );
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          return MaterialApp.router(
+						debugShowCheckedModeBanner: false,
+            routeInformationParser: _router.routeInformationParser,
+            routerDelegate: _router.routerDelegate,
+            title: 'Meeting Scheduler',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+            ),
+          );
+        }
       },
     );
   }
-}
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Material(
-        child: Center(
-      child: Text('Hello'),
-    ));
-  }
+  final GoRouter _router = GoRouter(
+    urlPathStrategy: UrlPathStrategy.path,
+    routes: [
+      GoRoute(
+        path: '/',
+        name: 'auth',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const AuthGate(),
+        ),
+      ),
+      // GoRoute(
+      //   path: '/',
+      //   name: 'home',
+      //   pageBuilder: (context, state) => MaterialPage(
+      //     key: state.pageKey,
+      //     child: const ScreenHome(),
+      //   ),
+      // ),
+      GoRoute(
+        path: '/meeting',
+        name: 'meeting',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const MeetingDetailsScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/organization',
+        name: 'organization',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const OrganizationDetailsScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const ProfileScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/project',
+        name: 'project',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const ProjectDetailsScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '/team',
+        name: 'team',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: const TeamDetailsScreen(),
+        ),
+      ),
+    ],
+    errorPageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: NotFoundScreen(exception: state.error!),
+    ),
+  );
 }
