@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+      future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
           );
         } else {
           return MaterialApp.router(
-						debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: false,
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,
             title: 'Meeting Scheduler',
@@ -54,14 +55,6 @@ class MyApp extends StatelessWidget {
           child: const AuthGate(),
         ),
       ),
-      // GoRoute(
-      //   path: '/',
-      //   name: 'home',
-      //   pageBuilder: (context, state) => MaterialPage(
-      //     key: state.pageKey,
-      //     child: const ScreenHome(),
-      //   ),
-      // ),
       GoRoute(
         path: '/meeting',
         name: 'meeting',
