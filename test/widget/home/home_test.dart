@@ -11,8 +11,6 @@ void main() {
 
       expect(find.byType(MainCalendar), findsOneWidget);
       expect(find.byType(AccountMenu), findsOneWidget);
-    },
-        skip:
-            true); // We are following TDD, the code to make the test pass will be implemented next
+    }); // We are following TDD, the code to make the test pass will be implemented next
   });
 }
