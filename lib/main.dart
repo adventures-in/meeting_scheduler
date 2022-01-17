@@ -9,6 +9,7 @@ import 'package:meeting_scheduler/profile/profile_details_screen.dart';
 import 'package:meeting_scheduler/project/project_details_screen.dart';
 import 'package:meeting_scheduler/team/team_details_screen.dart';
 
+
 import 'firebase_options.dart';
 
 void main() {
@@ -76,7 +77,7 @@ class MyApp extends StatelessWidget {
         name: 'profile',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ProfileScreen(),
+					child: const ProfileScreen(),
         ),
       ),
       GoRoute(
@@ -84,7 +85,7 @@ class MyApp extends StatelessWidget {
         name: 'project',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const ProjectDetailsScreen(),
+					child: const ProjectDetailsScreen(),
         ),
       ),
       GoRoute(
@@ -92,7 +93,7 @@ class MyApp extends StatelessWidget {
         name: 'team',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: const TeamDetailsScreen(),
+					child: const TeamDetailsScreen(),
         ),
       ),
     ],
