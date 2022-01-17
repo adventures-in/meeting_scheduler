@@ -7,3 +7,11 @@ _To create a supple, knowledge-rich design calls for a versatile, shared team la
 ## Home
 
 The starting point of the app after successful authentication.  The Navigation stack always starts with the Home Screen.
+
+### Main Calendar
+
+The calendar widget that is part of the Home Screen, shown on app load.
+
+### Account Menu
+
+A menu of account related options, available at the top-right corner of the Home Screen.
